@@ -1,0 +1,31 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(36, 36, 92);
+    width: 100%;
+    padding: 10px;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 2px 0px 3px black;
+}
+
+.h1{
+    color: white;
+    font-size: 1.2em;
+    
+}
+
+.componentes{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-right: 40px;
+}
+
+.imagem{
+    max-width: 30px;
+}
+
+.texto{
+    color: white;
+}
