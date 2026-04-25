@@ -5,10 +5,10 @@ import logo from '../assets/BibliotecaLogoBranco.png'
 function Sidebar(){
     return(
         <aside className={styles.principal}>
-            <img src={logo} alt="BibliotecaLogoBranco"  style={{ width: 250, marginBottom: 24 }}/>
+            <img src={logo} alt="BibliotecaLogoBranco"  style={{ width: 250, marginBottom: 70 }}/>
             <nav className={styles.nav}>
                 <ul className={styles.ul}>
-                    <li className={styles.li}>DashBoard</li>
+                    <li className={styles.li}>Dashboard</li>
                     <li className={styles.li}>
                         <NavLink to="/bibliotecario/adicionar">Acervo</NavLink></li>
                     <li className={styles.li}>

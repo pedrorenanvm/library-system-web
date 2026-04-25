@@ -27,11 +27,11 @@ export default function Login() {
     }}>
       <div style={{
         background: '#fff', padding: 48, borderRadius: 12,
-        width: 600, height:600, boxShadow: '7px 12px 31px -12px rgba(0,0,0,0.75)',
+        width: 550, height:550, boxShadow: '7px 12px 31px -12px rgba(0,0,0,0.75)',
         display: 'flex', flexDirection: 'column', alignItems: 'center'
       }}>
         
-      <img src={logo} alt="BibliotecaApp"  style={{ width: 250, marginBottom: 24 }}/>
+      <img src={logo} alt="BibliotecaApp"  style={{ width: 250, marginBottom: 24, marginTop: -20 }}/>
 
         <input
           type="email"
@@ -54,6 +54,7 @@ export default function Login() {
             borderRadius: '30px 30px 30px 30px', border: '1px solid #0e55da',
             boxSizing: 'border-box', fontSize: 15
           }}
+          
         />
 
         <a 
@@ -63,7 +64,8 @@ export default function Login() {
             fontSize: '14px',
             textDecoration: 'none',
             alignSelf: 'flex-end', 
-            marginTop: '15px'
+            marginTop: '15px',
+            marginRight:'20px'
           }}
         >
           Esqueci minha senha
@@ -77,7 +79,7 @@ export default function Login() {
             width: '300px',height:'50px', padding: 12, background: '#004488',
             color: '#fff', border: 'none', borderRadius: '39px 39px 39px 39px',
             cursor: 'pointer', fontSize: '20px', boxShadow: '7px 12px 31px -12px rgba(0,0,0,0.75)',
-            fontFamily:'Arial Narrow, sans-serif', marginTop:100
+            fontFamily:'Arial Narrow, sans-serif', marginTop:70
 
           }}
         >

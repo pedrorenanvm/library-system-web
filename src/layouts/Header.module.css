@@ -5,8 +5,7 @@
     width: 100%;
     padding: 10px;
     align-items: center;
-    font-family: 'Courier New', Courier, monospace;
-    box-shadow: 2px 0px 3px black;
+    box-shadow: 5px 0px 5px black;
 }
 
 .h1{

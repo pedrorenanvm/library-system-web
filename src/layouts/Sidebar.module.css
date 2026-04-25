@@ -6,14 +6,6 @@
     padding: 30px;
 }
 
-.tituloPrincipal{
-    margin-bottom: 150px;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-
-}
-
 .ul{
     display: flex;
     flex-direction: column;
