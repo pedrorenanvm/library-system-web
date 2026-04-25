@@ -60,7 +60,7 @@ export default function Login() {
         <a 
            href="/recuperar-senha" 
            style={{
-            color: 'blue',
+            color: '#004488',
             fontSize: '14px',
             textDecoration: 'none',
             alignSelf: 'flex-end', 
