@@ -27,6 +27,8 @@ function CadastrarLeitor(){
 
     if (!numero.trim())
       novosErros.numero = 'Número é obrigatório'
+    else if (numero.replace(/\D/g, '').length !== 11)
+      novosErros.numero = 'Numero inválido'
 
     setErros(novosErros)
     return Object.keys(novosErros).length === 0
@@ -42,6 +44,10 @@ function CadastrarLeitor(){
     setCpf('')
     setNumero('')
     setErros({})
+
+    setTimeout(() => {
+      setFeedback(null)
+    }, 3000)
   }
 
     return(
@@ -53,12 +59,12 @@ function CadastrarLeitor(){
                     <h1 className={styles.tituloSection}>Adicionar</h1>
 
                      {feedback === 'sucesso' && (
-                        <p style={{ color: 'green', marginBottom: 12 }}>
+                        <p style={{ color: 'green', marginBottom: 12, background:'whitesmoke' }}>
                             Leitor cadastrado com sucesso!
                         </p>
                      )}
                      {feedback === 'erro' && (
-                        <p style={{ color: 'red', marginBottom: 12 }}>
+                        <p style={{ color: 'red', marginBottom: 12, background:'whitesmoke' }}>
                             Erro ao cadastrar. Tente novamente.
                         </p>
                      )}
@@ -68,24 +74,24 @@ function CadastrarLeitor(){
                         
                         <div className={styles.campoMetade}>
                             <label>Nome</label>
-                            <input required type="text" onChange={(e) => setNome(e.target.value)}/>
+                            <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
                              {erros.nome && <span style={{ color: 'red', fontSize: 12 }}>{erros.nome}</span>}
                         </div>
                         <div className={styles.campoMetade}>
                             <label>Endereço</label>
-                            <input required type="text" onChange={(e) => setEndereco(e.target.value)} />
+                            <input type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
                              {erros.endereco && <span style={{ color: 'red', fontSize: 12 }}>{erros.endereco}</span>}
                         </div>
 
                         <div className={styles.campoMetade}>
                             <label>CPF</label>
-                            <input type="text" onChange={(e) => setCpf(e.target.value)}/>
+                            <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
                              {erros.cpf && <span style={{ color: 'red', fontSize: 12 }}>{erros.cpf}</span>}
                         </div>
 
                         <div className={styles.campoMetade}>
                             <label>Numero</label>
-                            <input required type="text" onChange={(e) => setNumero(e.target.value)}/>
+                            <input type="text" value={numero} onChange={(e) => setNumero(e.target.value)} />
                              {erros.numero && <span style={{ color: 'red', fontSize: 12 }}>{erros.numero}</span>}
                         </div>
 
