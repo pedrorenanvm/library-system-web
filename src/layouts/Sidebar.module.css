@@ -29,3 +29,36 @@
   color: white;
   text-decoration: none;
 }
+
+.submenu {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Remove o padding padrão para a borda ocupar toda a largura interna */
+}
+
+.submenuItem {
+    width: 100%;
+}
+
+.submenuLink {
+    display: block;
+    padding: 10px 0;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.submenuLink:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
