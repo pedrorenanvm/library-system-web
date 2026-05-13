@@ -8,23 +8,32 @@ function Sidebar() {
 
     return (
         <aside className={styles.principal}>
-            <img src={logo} alt="BibliotecaLogoBranco" style={{ width: 250, marginBottom: 70 }} />
+            {/* Logo da Biblioteca */}
+            <img 
+                src={logo} 
+                alt="BibliotecaLogoBranco" 
+                style={{ width: 250, marginBottom: 30 }} 
+            />
+
             <nav className={styles.nav}>
                 <ul className={styles.ul}>
+                    {/* Item Simples */}
                     <li className={styles.li}>Dashboard</li>
-                    
-                    <li className={styles.li}>
-                        <NavLink to="/bibliotecario/adicionar">Acervo</NavLink>
-                    </li>
-                    
-                    <li className={styles.li}>
-                        <NavLink to="/bibliotecario/adicionarLeitor">Leitores</NavLink>
-                    </li>
 
+                    {/* Link Direto */}
+                    <NavLink to="/bibliotecario/adicionar" className={({ isActive }) => isActive ? styles.active : ""}>
+                        <li className={styles.li}>Acervo</li>
+                    </NavLink>
+
+                    <NavLink to="/bibliotecario/adicionarLeitor">
+                        <li className={styles.li}>Leitores</li>
+                    </NavLink>
+
+                    {/* Item com Submenu (Empréstimos) */}
                     <li className={styles.li}>
                         <div 
                             onClick={() => setShowEmprestimos(!showEmprestimos)} 
-                            style={{ cursor: 'pointer', display: 'block', width: '100%' }}
+                            style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}
                         >
                             Empréstimos {showEmprestimos ? '▴' : '▾'}
                         </div>
@@ -51,7 +60,14 @@ function Sidebar() {
                         )}
                     </li>
 
+                    {/* Itens Adicionais */}
+                    <NavLink to="/bibliotecario/pagarMulta">
+                        <li className={styles.li}>Multa do leitor (teste)</li>
+                    </NavLink>
+
                     <li className={styles.li}>Relatórios</li>
+
+                    <li className={styles.li} style={{ marginTop: 'auto', color: '#ff4d4d' }}>Sair</li>
                 </ul>
             </nav>
         </aside>
