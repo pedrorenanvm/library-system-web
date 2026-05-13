@@ -33,7 +33,7 @@ function Sidebar() {
                     <li className={styles.li}>
                         <div 
                             onClick={() => setShowEmprestimos(!showEmprestimos)} 
-                            style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}
+                            style={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', width: '100%' }}
                         >
                             Empréstimos {showEmprestimos ? '▴' : '▾'}
                         </div>
