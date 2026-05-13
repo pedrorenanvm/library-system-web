@@ -1,0 +1,98 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.direita{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.secao{
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    height: 500px;
+    border-radius: 20px;
+    background-color: whitesmoke;
+    margin: auto;
+}
+
+.tituloSection{
+    margin-bottom: 40px;
+    font-size: 1.5em;
+}
+
+/* Tabela */
+.tabelaContainer {
+    width: 100%;
+    max-height: 320px; /* Altura suficiente para ~5 linhas */
+    overflow-y: auto;  /* Ativa o rolamento vertical */
+    overflow-x: hidden;
+    border: 1px solid black;
+}
+
+/*cabeçalho fixado*/
+.tabela thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #3198ff; /* Mesma cor que você já usa */
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+
+}
+
+.tabela th, .tabela td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.tabela th {
+    background-color: #3198ff;
+    color: #ffffff;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.comMulta {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+/* Botões */
+.btnDevolver, .btnPagar {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    width: 200px;
+}
+
+.btnDevolver {
+    background-color: #28a745;
+    color: white;
+}
+
+.btnPagar {
+    background-color: #0e55da;
+    color: white;
+}
+
+.btnDevolver:hover, .btnPagar:hover {
+    opacity: 0.8;
+}

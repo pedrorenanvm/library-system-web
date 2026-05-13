@@ -13,7 +13,8 @@ function Sidebar(){
                         <NavLink to="/bibliotecario/adicionar">Acervo</NavLink></li>
                     <li className={styles.li}>
                         <NavLink to="/bibliotecario/adicionarLeitor">Leitores</NavLink></li>
-                    <li className={styles.li}>Empréstimos</li>
+                    <li className={styles.li}>
+                        <NavLink to="/bibliotecario/adicionarDevolucao">Empréstimos</NavLink></li>
                     <li className={styles.li}>Relatórios</li>
                 </ul>
             </nav>
