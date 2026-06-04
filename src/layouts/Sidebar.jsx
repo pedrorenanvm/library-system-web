@@ -8,7 +8,6 @@ function Sidebar() {
 
     return (
         <aside className={styles.principal}>
-            {/* Logo da Biblioteca */}
             <img 
                 src={logo} 
                 alt="BibliotecaLogoBranco" 
@@ -17,10 +16,9 @@ function Sidebar() {
 
             <nav className={styles.nav}>
                 <ul className={styles.ul}>
-                    {/* Item Simples */}
                     <li className={styles.li}>Dashboard</li>
 
-                    {/* Link Direto */}
+                    
                     <NavLink to="/bibliotecario/adicionar" className={({ isActive }) => isActive ? styles.active : ""}>
                         <li className={styles.li}>Acervo</li>
                     </NavLink>
@@ -29,7 +27,7 @@ function Sidebar() {
                         <li className={styles.li}>Leitores</li>
                     </NavLink>
 
-                    {/* Item com Submenu (Empréstimos) */}
+                    
                     <li className={styles.li}>
                         <div 
                             onClick={() => setShowEmprestimos(!showEmprestimos)} 
@@ -60,7 +58,6 @@ function Sidebar() {
                         )}
                     </li>
 
-                    {/* Itens Adicionais */}
                     <NavLink to="/bibliotecario/pagarMulta">
                         <li className={styles.li}>Multa do leitor (teste)</li>
                     </NavLink>
