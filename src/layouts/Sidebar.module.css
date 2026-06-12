@@ -1,4 +1,4 @@
-.principal{
+.principal {
     background-color: rgb(43, 43, 118);
     width: 300px;
     height: 100vh;
@@ -6,28 +6,32 @@
     padding: 20px 30px;
 }
 
-.ul{
+.ul {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
-.li{
+.ul a {
+    color: white;
+    text-decoration: none;
+}
+
+.li {
     text-align: center;
     padding: 10px;
     border: 2px solid rgb(60, 74, 144);
     border-radius: 5px;
-
 }
 
-.li:hover{
+.li:hover {
     background-color: rgba(224, 255, 255, 0.182);
     cursor: pointer;
 }
 
 .li a {
-  color: white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 .submenu {
@@ -36,7 +40,6 @@
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    /* Remove o padding padrão para a borda ocupar toda a largura interna */
 }
 
 .submenuItem {
@@ -61,4 +64,3 @@
 .divider {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-

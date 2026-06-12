@@ -6,6 +6,7 @@ import CadastrarLeitor from '../pages/CadastrarLeitor'
 import Devolucao from '../pages/Devolucao'
 import Emprestimos from '../pages/Emprestimos'
 import MultasDoLeitor from '../pages/MultasDoLeitor'
+import VerItens from '../pages/VerItens';
 
 export default function AppRoutes() {
   return (
@@ -20,6 +21,7 @@ export default function AppRoutes() {
             <Route path='novoEmprestimo' element={<Emprestimos />}></Route>
             <Route path="adicionarDevolucao" element={<Devolucao />}></Route>
             <Route path="pagarMulta" element={<MultasDoLeitor/>}></Route>
+            <Route path="/bibliotecario/acervo" element={<VerItens />} />
           </Route>
         </Route>
 

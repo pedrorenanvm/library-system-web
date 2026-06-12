@@ -5,6 +5,7 @@ import logo from '../assets/BibliotecaLogoBranco.png';
 
 function Sidebar() {
     const [showEmprestimos, setShowEmprestimos] = useState(false);
+    const [showAcervo, setShowAcervo] = useState(false);
 
     return (
         <aside className={styles.principal}>
@@ -18,16 +19,41 @@ function Sidebar() {
                 <ul className={styles.ul}>
                     <li className={styles.li}>Dashboard</li>
 
-                    
-                    <NavLink to="/bibliotecario/adicionar" className={({ isActive }) => isActive ? styles.active : ""}>
-                        <li className={styles.li}>Acervo</li>
-                    </NavLink>
+                    <li className={styles.li}>
+                        <div 
+                            onClick={() => setShowAcervo(!showAcervo)} 
+                            style={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', width: '100%' }}
+                        >
+                            Acervo {showAcervo ? '▴' : '▾'}
+                        </div>
+
+                        {showAcervo && (
+                            <ul className={styles.submenu}>
+                                <li className={styles.submenuItem}>
+                                    <NavLink 
+                                        to="/bibliotecario/adicionar" 
+                                        className={styles.submenuLink}
+                                    >
+                                        Adicionar item
+                                    </NavLink>
+                                </li>
+
+                                <li className={`${styles.submenuItem} ${styles.divider}`}>
+                                    <NavLink 
+                                        to="/bibliotecario/acervo" 
+                                        className={styles.submenuLink}
+                                    >
+                                        Ver itens
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        )}
+                    </li>
 
                     <NavLink to="/bibliotecario/adicionarLeitor">
                         <li className={styles.li}>Leitores</li>
                     </NavLink>
 
-                    
                     <li className={styles.li}>
                         <div 
                             onClick={() => setShowEmprestimos(!showEmprestimos)} 
@@ -46,6 +72,7 @@ function Sidebar() {
                                         Novo Empréstimo
                                     </NavLink>
                                 </li>
+
                                 <li className={`${styles.submenuItem} ${styles.divider}`}>
                                     <NavLink 
                                         to="/bibliotecario/adicionarDevolucao" 
@@ -64,7 +91,9 @@ function Sidebar() {
 
                     <li className={styles.li}>Relatórios</li>
 
-                    <li className={styles.li} style={{ marginTop: 'auto', color: '#ff4d4d' }}>Sair</li>
+                    <li className={styles.li} style={{ marginTop: 'auto', color: '#ff4d4d' }}>
+                        Sair
+                    </li>
                 </ul>
             </nav>
         </aside>
