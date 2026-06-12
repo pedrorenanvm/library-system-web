@@ -75,7 +75,7 @@ function Emprestimos() {
                         <div className={styles.campoMetade}>
                             <label>Usuário</label>
                             <input 
-                                type="text" 
+                                type="select" 
                                 value={usuario} 
                                 onChange={(e) => {
                                     setUsuario(e.target.value);

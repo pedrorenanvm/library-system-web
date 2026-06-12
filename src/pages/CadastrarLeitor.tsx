@@ -7,7 +7,7 @@ import api from "../services/api";
 function CadastrarLeitor() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
-  const [matricula, setMatricula] = useState('');
+  const [cpf, setCPF] = useState('');
   const [senha, setSenha] = useState('');
   const [telefone, setTelefone] = useState('');
   const [erros, setErros] = useState<Record<string, string>>({});
@@ -26,9 +26,10 @@ function CadastrarLeitor() {
     else if (!/\S+@\S+\.\S+/.test(email))
       novosErros.email = 'Informe um e-mail válido';
 
-    if (!matricula.trim())
-      novosErros.matricula = 'Matrícula é obrigatória';
-
+    if (!cpf.trim())
+      novosErros.cpf = 'CPF é obrigatório';
+    if(cpf.length < 11)
+      novosErros.cpf = 'CPF com tamanho insuficiente'
     if (!senha.trim())
       novosErros.senha = 'Senha é obrigatória';
     else if (senha.length < 8)
@@ -46,10 +47,10 @@ function CadastrarLeitor() {
     if (!validar()) return;
 
     try {
-      await api.post('/v1/api/users', {
+      await api.post('/v1/api/readers', {
         name: nome,
         email,
-        registrationNumber: matricula,
+        registrationNumber: cpf,
         password: senha,
         phone: telefone || null,
       });
@@ -57,7 +58,7 @@ function CadastrarLeitor() {
       setFeedback('sucesso');
       setNome('');
       setEmail('');
-      setMatricula('');
+      setCPF('');
       setSenha('');
       setTelefone('');
       setErros({});
@@ -101,9 +102,9 @@ function CadastrarLeitor() {
             </div>
 
             <div className={styles.campoMetade}>
-              <label>Matrícula</label>
-              <input type="text" value={matricula} onChange={(e) => setMatricula(e.target.value)} />
-              {erros.matricula && <span style={{ color: 'red', fontSize: 12 }}>{erros.matricula}</span>}
+              <label>CPF</label>
+              <input type="text" value={cpf} onChange={(e) => setCPF(e.target.value)} />
+              {erros.matricula && <span style={{ color: 'red', fontSize: 12 }}>{erros.cpf}</span>}
             </div>
 
             <div className={styles.campoMetade}>
@@ -120,7 +121,7 @@ function CadastrarLeitor() {
 
             <div className={styles.containerBotoes}>
               <button type="button" className={styles.btnCancelar} onClick={() => {
-                setNome(''); setEmail(''); setMatricula(''); setSenha(''); setTelefone(''); setErros({});
+                setNome(''); setEmail(''); setCPF(''); setSenha(''); setTelefone(''); setErros({});
               }}>
                 Cancelar
               </button>
