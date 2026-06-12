@@ -11,7 +11,6 @@ function AdicionarItem() {
     const [ano, setAno] = useState('');
     const [exemplares, setExemplares] = useState('');
     const [categoria, setCategoria] = useState('');
-    const [descricao, setDescricao] = useState('');
     const [carregando, setCarregando] = useState(false);
 
     async function adicionarItem(e) {
@@ -20,17 +19,13 @@ function AdicionarItem() {
         try {
             setCarregando(true);
 
-            const descricaoCompleta = `
-${descricao}
-
+            const item = {
+                name: titulo,
+                description: `
 Autor(es): ${autor}
 Ano: ${ano}
 Categoria: ${categoria}
-            `.trim();
-
-            const item = {
-                name: titulo,
-                description: descricaoCompleta,
+                `.trim(),
                 type: tipo,
                 maxLoanDays: 7,
                 totalCopies: Number(exemplares)
@@ -46,7 +41,6 @@ Categoria: ${categoria}
             setAno('');
             setExemplares('');
             setCategoria('');
-            setDescricao('');
         } catch (error) {
             console.log(error);
 
@@ -68,7 +62,6 @@ Categoria: ${categoria}
         setAno('');
         setExemplares('');
         setCategoria('');
-        setDescricao('');
     }
 
     return (
@@ -147,16 +140,6 @@ Categoria: ${categoria}
                                 type="text"
                                 value={categoria}
                                 onChange={(e) => setCategoria(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <div className={styles.campoTotal}>
-                            <label>Descrição</label>
-                            <textarea
-                                rows="4"
-                                value={descricao}
-                                onChange={(e) => setDescricao(e.target.value)}
                                 required
                             />
                         </div>
