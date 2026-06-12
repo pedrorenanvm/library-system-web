@@ -1,94 +1,186 @@
 import Sidebar from '../layouts/Sidebar';
 import Header from '../layouts/Header';
-import styles from './AdicionarItem.module.css'
-import {useState} from 'react';
-function AdicionarItem(){
+import styles from './AdicionarItem.module.css';
+import { useState } from 'react';
+import api from '../services/api';
 
+function AdicionarItem() {
     const [titulo, setTitulo] = useState('');
     const [autor, setAutor] = useState('');
-    const [tipo, setTipo] = useState('');
+    const [tipo, setTipo] = useState('book');
     const [ano, setAno] = useState('');
     const [exemplares, setExemplares] = useState('');
-    const[codigo, setCodigo] = useState('');
     const [categoria, setCategoria] = useState('');
     const [descricao, setDescricao] = useState('');
+    const [carregando, setCarregando] = useState(false);
 
-    function adicionarItem(e){
+    async function adicionarItem(e) {
         e.preventDefault();
-        console.log(titulo);
-        console.log(autor);
-        console.log(tipo)
-        console.log(ano);
-        console.log(exemplares);
-        console.log(categoria);
-        console.log(descricao);
-        window.alert('Item salvo com sucesso!')
+
+        try {
+            setCarregando(true);
+
+            const descricaoCompleta = `
+${descricao}
+
+Autor(es): ${autor}
+Ano: ${ano}
+Categoria: ${categoria}
+            `.trim();
+
+            const item = {
+                name: titulo,
+                description: descricaoCompleta,
+                type: tipo,
+                maxLoanDays: 7,
+                totalCopies: Number(exemplares)
+            };
+
+            await api.post('/v1/api/titles', item);
+
+            alert('Item adicionado com sucesso!');
+
+            setTitulo('');
+            setAutor('');
+            setTipo('book');
+            setAno('');
+            setExemplares('');
+            setCategoria('');
+            setDescricao('');
+        } catch (error) {
+            console.log(error);
+
+            const mensagem =
+                error.response?.data?.details?.join('\n') ||
+                error.response?.data?.message ||
+                'Erro ao adicionar item';
+
+            alert(mensagem);
+        } finally {
+            setCarregando(false);
+        }
     }
 
-    return(
+    function cancelar() {
+        setTitulo('');
+        setAutor('');
+        setTipo('book');
+        setAno('');
+        setExemplares('');
+        setCategoria('');
+        setDescricao('');
+    }
+
+    return (
         <div className={styles.container}>
-            <Sidebar/>
+            <Sidebar />
 
             <main className={styles.direita}>
-
-                <Header titulo={`Adicionar novo item ao acervo`} nome={`Bibliotecário`} linkImg={`https://img.icons8.com/ios-filled/100/ffffff/user.png`}/>
+                <Header
+                    titulo="Adicionar novo item ao acervo"
+                    nome="Bibliotecário"
+                    linkImg="https://img.icons8.com/ios-filled/100/ffffff/user.png"
+                />
 
                 <section className={styles.secao}>
                     <h1 className={styles.tituloSection}>Adicionar item</h1>
-                <form className={styles.gridFormulario} onSubmit={adicionarItem}>
-                        {/* Linha 1 */}
+
+                    <form className={styles.gridFormulario} onSubmit={adicionarItem}>
                         <div className={styles.campoMetade}>
                             <label>Título</label>
-                            <input required type="text" onChange={(e) => setTitulo(e.target.value)}/>
-                        </div>
-                        <div className={styles.campoMetade}>
-                            <label>Autor/Autores</label>
-                            <input required type="text" onChange={(e) => setAutor(e.target.value)} />
+                            <input
+                                type="text"
+                                value={titulo}
+                                onChange={(e) => setTitulo(e.target.value)}
+                                required
+                            />
                         </div>
 
-                        {/* Linha 2 */}
+                        <div className={styles.campoMetade}>
+                            <label>Autor/Autores</label>
+                            <input
+                                type="text"
+                                value={autor}
+                                onChange={(e) => setAutor(e.target.value)}
+                                required
+                            />
+                        </div>
+
                         <div className={styles.campoPequeno}>
                             <label>Tipo</label>
                             <select
-                                required
-                                className={styles.seletor} 
-                                value={tipo} 
+                                className={styles.seletor}
+                                value={tipo}
                                 onChange={(e) => setTipo(e.target.value)}
+                                required
                             >
-                                <option value="livro">Livro</option>
-                                <option value="periodico">Periódico</option>
-                                <option value="outro">Outro</option>
+                                <option value="book">Livro</option>
+                                <option value="periodical">Periódico</option>
+                                <option value="other">Outro</option>
                             </select>
                         </div>
 
                         <div className={styles.campoPequeno}>
                             <label>Ano</label>
-                            <input required type="number" onChange={(e) => setAno(e.target.value)}/>
-                        </div>
-                        <div className={styles.campoPequeno}>
-                            <label>Exemplares</label>
-                            <input required type="number" onChange={(e) => setExemplares(e.target.value)}/>
-                        </div>
-                        
-                        <div className={styles.campoPequeno}>
-                            <label>Categoria</label>
-                            <input required type="text" onChange={(e) => setCategoria(e.target.value)}/>
+                            <input
+                                type="number"
+                                value={ano}
+                                onChange={(e) => setAno(e.target.value)}
+                                required
+                            />
                         </div>
 
-                        {/* Linha 3 */}
+                        <div className={styles.campoPequeno}>
+                            <label>Exemplares</label>
+                            <input
+                                type="number"
+                                min="1"
+                                value={exemplares}
+                                onChange={(e) => setExemplares(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.campoPequeno}>
+                            <label>Categoria</label>
+                            <input
+                                type="text"
+                                value={categoria}
+                                onChange={(e) => setCategoria(e.target.value)}
+                                required
+                            />
+                        </div>
+
                         <div className={styles.campoTotal}>
                             <label>Descrição</label>
-                            <textarea required rows="4" onChange={(e) => setDescricao(e.target.value)}></textarea>
+                            <textarea
+                                rows="4"
+                                value={descricao}
+                                onChange={(e) => setDescricao(e.target.value)}
+                                required
+                            />
                         </div>
 
                         <div className={styles.containerBotoes}>
-                            <button type="button" className={styles.btnCancelar}>Cancelar</button>
-                            <button type="submit" className={styles.btnAdicionar}>Adicionar item</button>
+                            <button
+                                type="button"
+                                className={styles.btnCancelar}
+                                onClick={cancelar}
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="submit"
+                                className={styles.btnAdicionar}
+                                disabled={carregando}
+                            >
+                                {carregando ? 'Salvando...' : 'Adicionar item'}
+                            </button>
                         </div>
                     </form>
                 </section>
             </main>
-        
         </div>
     );
 }
