@@ -54,6 +54,10 @@ function Sidebar() {
                         <li className={styles.li}>Leitores</li>
                     </NavLink>
 
+                    <NavLink to="/bibliotecario/assinaturas">
+                        <li className={styles.li}>Assinaturas</li>
+                    </NavLink>
+
                     <li className={styles.li}>
                         <div 
                             onClick={() => setShowEmprestimos(!showEmprestimos)} 

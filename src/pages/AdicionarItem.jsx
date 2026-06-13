@@ -31,7 +31,17 @@ Categoria: ${categoria}
                 totalCopies: Number(exemplares)
             };
 
-            await api.post('/v1/api/titles', item);
+            const response = await api.post('/v1/api/titles', item);
+            const titleId = response.data.id;
+
+            await Promise.all(
+                Array.from({ length: Number(exemplares) }, (_, i) =>
+                    api.post('/v1/api/copy', {
+                        barcode: `${titleId}-${i + 1}`,
+                        titleId,
+                    })
+                )
+            );
 
             alert('Item adicionado com sucesso!');
 

@@ -1,0 +1,151 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.direita {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.secao {
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    border-radius: 20px;
+    background-color: whitesmoke;
+    margin: auto;
+}
+
+.topoSecao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tituloSection {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.gridFormulario {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: #ebebeb;
+    border-radius: 12px;
+}
+
+.campoMetade {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.campoPequeno {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerBotoes {
+    grid-column: span 4;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+}
+
+.cardAcoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+input, textarea {
+    padding: 10px;
+    border: none;
+    background-color: #dfdfdf;
+    border-radius: 8px;
+}
+
+.btnAdicionar {
+    background-color: #004488;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btnCancelar {
+    background-color: #ddd;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btnRenovar {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btnCancelarCard {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}

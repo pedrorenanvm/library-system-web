@@ -7,6 +7,7 @@ import Devolucao from '../pages/Devolucao'
 import Emprestimos from '../pages/Emprestimos'
 import MultasDoLeitor from '../pages/MultasDoLeitor'
 import VerItens from '../pages/VerItens';
+import Assinaturas from '../pages/Assinaturas'
 
 export default function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ export default function AppRoutes() {
             <Route path="adicionarDevolucao" element={<Devolucao />}></Route>
             <Route path="pagarMulta" element={<MultasDoLeitor/>}></Route>
             <Route path="/bibliotecario/acervo" element={<VerItens />} />
+            <Route path="assinaturas" element={<Assinaturas />} />
           </Route>
         </Route>
 
