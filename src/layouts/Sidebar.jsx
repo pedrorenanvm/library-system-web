@@ -57,7 +57,10 @@ function Sidebar() {
                     <NavLink to="/bibliotecario/assinaturas">
                         <li className={styles.li}>Assinaturas</li>
                     </NavLink>
-
+                    
+                    <NavLink to="/bibliotecario/registrarPerda">
+                        <li className={styles.li}>Registrar Perda</li>
+                    </NavLink>
                     <li className={styles.li}>
                         <div 
                             onClick={() => setShowEmprestimos(!showEmprestimos)} 
@@ -90,7 +93,7 @@ function Sidebar() {
                     </li>
 
                     <NavLink to="/bibliotecario/pagarMulta">
-                        <li className={styles.li}>Multa do leitor (teste)</li>
+                        <li className={styles.li}>Multa do leitor</li>
                     </NavLink>
 
                     <li className={styles.li}>Relatórios</li>
