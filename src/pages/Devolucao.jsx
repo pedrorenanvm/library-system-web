@@ -1,111 +1,221 @@
-import { useState } from "react";
 import Sidebar from "../layouts/Sidebar";
 import Header from "../layouts/Header";
 import styles from "./Devolucao.module.css";
+import { useEffect, useMemo, useState } from "react";
+import api from "../services/api";
 
 function Devolucao() {
-    // Dados simulados usando composição de objetos
-    const [emprestimos, setEmprestimos] = useState([
-        { 
-            id: 1, 
-            obra: { id: 50, nome: "Java Como Programar", tipo: "book" }, 
-            leitor: { id: 101, nome: "Alisson Santos", tipoUsuario: "reader" },
-            dataLimite: "2026-05-10", 
-            multaPaga: false 
-        },
-        { 
-            id: 2, 
-            obra: { id: 60, nome: "Estruturas de Dados", tipo: "book" }, 
-            leitor: { id: 102, nome: "João Silva", tipoUsuario: "reader" },
-            dataLimite: "2026-05-20", 
-            multaPaga: false 
-        },
-        { 
-            id: 3, 
-            obra: { id: 70, nome: "Redes de Computadores", tipo: "book" }, 
-            leitor: { id: 103, nome: "José Maria", tipoUsuario: "reader" },
-            dataLimite: "2026-05-01", 
-            multaPaga: false 
-        },
-        { 
-            id: 4, 
-            obra: { id: 80, nome: "Harry Potter e a Pedra Filosofal", tipo: "book" }, 
-            leitor: { id: 104, nome: "Maria José", tipoUsuario: "reader" },
-            dataLimite: "2026-10-10", 
-            multaPaga: false 
-        },
-        { 
-            id: 5, 
-            obra: { id: 90, nome: "Tróia", tipo: "book" }, 
-            leitor: { id: 105, nome: "Suzana Vieira", tipoUsuario: "reader" },
-            dataLimite: "2026-03-01", 
-            multaPaga: false 
-        },
-        { 
-            id: 6, 
-            obra: { id: 100, nome: "A Origem das Espécies", tipo: "book" }, 
-            leitor: { id: 106, nome: "Mauro Antonio", tipoUsuario: "reader" },
-            dataLimite: "2026-05-13", 
-            multaPaga: false 
-        },
-        { 
-            id: 7, 
-            obra: { id: 110, nome: "Programação de Jogos", tipo: "book" }, 
-            leitor: { id: 107, nome: "José Carvalho", tipoUsuario: "reader" },
-            dataLimite: "2026-05-14", 
-            multaPaga: false 
-        },
-        { 
-            id: 8, 
-            obra: { id: 120, nome: "Cálculo Diferencial e Integral", tipo: "book" }, 
-            leitor: { id: 108, nome: "Fernanda Lima", tipoUsuario: "reader" },
-            dataLimite: "2026-05-05", 
-            multaPaga: false 
-        },
-        { 
-            id: 9, 
-            obra: { id: 130, nome: "Engenharia de Software", tipo: "book" }, 
-            leitor: { id: 109, nome: "Roberto Carlos", tipoUsuario: "reader" },
-            dataLimite: "2026-06-01", 
-            multaPaga: false 
-        }
-    ]);
+    const [leitores, setLeitores] = useState([]);
+    const [todosEmprestimos, setTodosEmprestimos] = useState([]);
+    const [leitorSelecionado, setLeitorSelecionado] = useState("");
 
-    const calcularMulta = (dataLimite) => {
+    const [carregando, setCarregando] = useState(false);
+    const [erro, setErro] = useState("");
+    const [sucesso, setSucesso] = useState("");
+
+    useEffect(() => {
+        carregarDados();
+    }, []);
+
+    async function carregarDados() {
+        try {
+            setCarregando(true);
+            setErro("");
+            setSucesso("");
+
+            const responseLeitores = await api.get("/v1/api/readers", {
+                params: {
+                    page: 1,
+                    limit: 100
+                }
+            });
+
+            const listaLeitores = responseLeitores.data?.data || responseLeitores.data || [];
+            setLeitores(listaLeitores);
+
+            const respostasEmprestimos = await Promise.all(
+                listaLeitores.map(async (leitor) => {
+                    const response = await api.get("/v1/api/loans", {
+                        params: {
+                            userId: leitor.id
+                        }
+                    });
+
+                    const emprestimos = response.data?.data || response.data || [];
+
+                    return emprestimos.map((emp) => ({
+                        ...emp,
+                        leitor
+                    }));
+                })
+            );
+
+            const listaCompleta = respostasEmprestimos.flat();
+
+            const emAberto = listaCompleta.filter((emp) =>
+                emp.status === "active" || emp.status === "overdue"
+            );
+
+            setTodosEmprestimos(emAberto);
+        } catch (error) {
+            console.log(error);
+
+            const mensagem =
+                error.response?.data?.details?.join("\n") ||
+                error.response?.data?.message ||
+                "Erro ao carregar devoluções pendentes.";
+
+            setErro(mensagem);
+            setTodosEmprestimos([]);
+        } finally {
+            setCarregando(false);
+        }
+    }
+
+    async function confirmarDevolucao(id) {
+        const confirmar = window.confirm("Confirmar devolução deste empréstimo?");
+
+        if (!confirmar) return;
+
+        try {
+            setErro("");
+            setSucesso("");
+
+            await api.put(`/v1/api/loans/${id}/devolucao`);
+
+            setSucesso("Devolução registrada com sucesso!");
+
+            await carregarDados();
+        } catch (error) {
+            console.log(error);
+
+            const mensagem =
+                error.response?.data?.details?.join("\n") ||
+                error.response?.data?.message ||
+                "Erro ao confirmar devolução.";
+
+            setErro(mensagem);
+        }
+    }
+
+    const emprestimosFiltrados = useMemo(() => {
+        if (!leitorSelecionado) {
+            return todosEmprestimos;
+        }
+
+        return todosEmprestimos.filter((emp) => {
+            const userId = emp.userId || emp.user_id || emp.user?.id || emp.leitor?.id;
+
+            return userId === leitorSelecionado;
+        });
+    }, [todosEmprestimos, leitorSelecionado]);
+
+    function getTitulo(emp) {
+        return (
+            emp.copy?.title?.name ||
+            emp.title?.name ||
+            emp.titleName ||
+            "Não informado"
+        );
+    }
+
+    function getLeitor(emp) {
+        return (
+            emp.user?.name ||
+            emp.reader?.name ||
+            emp.leitor?.name ||
+            "Não informado"
+        );
+    }
+
+    function getDataLimite(emp) {
+        return emp.dueDate || emp.due_date;
+    }
+
+    function formatarData(data) {
+        if (!data) return "-";
+
+        return new Date(data).toLocaleDateString("pt-BR");
+    }
+
+    function estaAtrasado(dataLimite) {
+        if (!dataLimite) return false;
+
         const hoje = new Date();
         const limite = new Date(dataLimite);
-        const diffTempo = hoje - limite;
-        const diffDias = Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
-        return diffDias > 0 ? diffDias * 2.50 : 0;
-    };
 
-    const handlePagamento = (id) => {
-        setEmprestimos(emprestimos.map(emp =>
-            emp.id === id ? { ...emp, multaPaga: true } : emp
-        ));
-    };
+        hoje.setHours(0, 0, 0, 0);
+        limite.setHours(0, 0, 0, 0);
 
-    const handleDevolucao = (id) => {
-        setEmprestimos(emprestimos.filter(emp => emp.id !== id));
-    };
+        return limite < hoje;
+    }
 
-    // Lógica das 7 linhas fixas
+    function limpar() {
+        setLeitorSelecionado("");
+        setErro("");
+        setSucesso("");
+    }
+
     const totalLinhasDesejadas = 7;
-    const linhasVaziasCount = totalLinhasDesejadas - emprestimos.length;
+    const linhasVaziasCount = totalLinhasDesejadas - emprestimosFiltrados.length;
     const espacosExtras = linhasVaziasCount > 0 ? Array(linhasVaziasCount).fill(null) : [];
 
     return (
         <div className={styles.container}>
             <Sidebar />
+
             <main className={styles.direita}>
-                <Header 
-                    titulo="Devolução e pagamento de multa" 
-                    nome="Bibliotecario" 
-                    linkImg="https://img.icons8.com/ios-filled/100/ffffff/user.png" 
+                <Header
+                    titulo="Devolução"
+                    nome="Bibliotecário"
+                    linkImg="https://img.icons8.com/ios-filled/100/ffffff/user.png"
                 />
 
                 <section className={styles.secao}>
                     <h1 className={styles.tituloSection}>Empréstimos em aberto</h1>
+
+                    {erro && <p className={styles.erro}>{erro}</p>}
+                    {sucesso && <p className={styles.sucesso}>{sucesso}</p>}
+
+                    <div className={styles.filtros}>
+                        <div>
+                            <label>Leitor</label>
+
+                            <select
+                                value={leitorSelecionado}
+                                onChange={(e) => setLeitorSelecionado(e.target.value)}
+                                className={styles.selectLeitor}
+                            >
+                                <option value="">Todos os leitores</option>
+
+                                {leitores.map((leitor) => (
+                                    <option key={leitor.id} value={leitor.id}>
+                                        {leitor.name} — {leitor.email}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <button
+                            type="button"
+                            className={styles.btnDevolver}
+                            onClick={limpar}
+                        >
+                            Limpar
+                        </button>
+
+                        <button
+                            type="button"
+                            className={styles.btnDevolver}
+                            onClick={carregarDados}
+                        >
+                            Atualizar
+                        </button>
+                    </div>
+
+                    {carregando && (
+                        <p className={styles.mensagem}>Carregando devoluções pendentes...</p>
+                    )}
 
                     <div className={styles.tabelaContainer}>
                         <table className={styles.tabela}>
@@ -114,37 +224,45 @@ function Devolucao() {
                                     <th>Leitor</th>
                                     <th>Obra</th>
                                     <th>Data Limite</th>
-                                    <th>Multa (R$)</th>
+                                    <th>Situação</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                {emprestimos.map((emp) => {
-                                    const valorCalculado = calcularMulta(emp.dataLimite);
-                                    const multaExibida = emp.multaPaga ? 0 : valorCalculado;
+                                {emprestimosFiltrados.map((emp) => {
+                                    const dataLimite = getDataLimite(emp);
+                                    const atrasado = estaAtrasado(dataLimite);
 
                                     return (
                                         <tr key={emp.id}>
-                                            <td>{emp.leitor.nome}</td>
-                                            <td>{emp.obra.nome}</td>
-                                            <td>{new Date(emp.dataLimite).toLocaleDateString('pt-BR')}</td>
-                                            <td className={multaExibida > 0 ? styles.comMulta : ""}>
-                                                {multaExibida > 0 ? `R$ ${multaExibida.toFixed(2)}` : "Isento"}
-                                            </td>
+                                            <td>{getLeitor(emp)}</td>
+                                            <td>{getTitulo(emp)}</td>
+                                            <td>{formatarData(dataLimite)}</td>
+
                                             <td>
-                                                {multaExibida > 0 ? (
-                                                    <button className={styles.btnPagar} onClick={() => handlePagamento(emp.id)}>
-                                                        Pagar
-                                                    </button>
-                                                ) : (
-                                                    <button className={styles.btnDevolver} onClick={() => handleDevolucao(emp.id)}>
-                                                        Confirmar Devolução
-                                                    </button>
-                                                )}
+                                                <span className={atrasado ? styles.atrasado : styles.emDia}>
+                                                    {atrasado ? "Atrasado" : "Em dia"}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <button
+                                                    className={styles.btnDevolver}
+                                                    onClick={() => confirmarDevolucao(emp.id)}
+                                                >
+                                                    Confirmar Devolução
+                                                </button>
                                             </td>
                                         </tr>
                                     );
                                 })}
+
+                                {!carregando && emprestimosFiltrados.length === 0 && (
+                                    <tr>
+                                        <td colSpan="5">Nenhuma devolução pendente encontrada.</td>
+                                    </tr>
+                                )}
 
                                 {espacosExtras.map((_, index) => (
                                     <tr key={`vazia-${index}`} className={styles.linhaVazia}>

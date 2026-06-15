@@ -9,6 +9,8 @@ import MultasDoLeitor from '../pages/MultasDoLeitor'
 import VerItens from '../pages/VerItens';
 import Assinaturas from '../pages/Assinaturas'
 import RegistrarPerda from '../pages/RegistrarPerda'
+import Dashboard from "../pages/Dashboard";
+
 
 export default function AppRoutes() {
   return (
@@ -18,6 +20,7 @@ export default function AppRoutes() {
 
         <Route element={<GuardRota perfisPermitidos={['admin']} />}>
           <Route path="/bibliotecario">
+          <Route path="/bibliotecario/dashboard" element={<Dashboard />} />
             <Route path="adicionar" element={<AdicionarItem />} />
             <Route path="adicionarLeitor" element={<CadastrarLeitor />}></Route>
             <Route path='novoEmprestimo' element={<Emprestimos />}></Route>

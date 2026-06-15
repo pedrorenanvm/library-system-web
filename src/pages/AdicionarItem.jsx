@@ -19,6 +19,8 @@ function AdicionarItem() {
         try {
             setCarregando(true);
 
+            const quantidadeExemplares = Number(exemplares);
+
             const item = {
                 name: titulo,
                 description: `
@@ -28,22 +30,30 @@ Categoria: ${categoria}
                 `.trim(),
                 type: tipo,
                 maxLoanDays: 7,
-                totalCopies: Number(exemplares)
+                totalCopies: quantidadeExemplares
             };
 
             const response = await api.post('/v1/api/titles', item);
-            const titleId = response.data.id;
+
+            const titleId =
+                response.data?.id ||
+                response.data?.data?.id ||
+                response.data?.title?.id;
+
+            if (!titleId) {
+                throw new Error('Título criado, mas o backend não retornou o ID do título.');
+            }
 
             await Promise.all(
-                Array.from({ length: Number(exemplares) }, (_, i) =>
+                Array.from({ length: quantidadeExemplares }, (_, i) =>
                     api.post('/v1/api/copy', {
-                        barcode: `${titleId}-${i + 1}`,
-                        titleId,
+                        titleId: titleId,
+                        barcode: `${titleId}-${i + 1}`
                     })
                 )
             );
 
-            alert('Item adicionado com sucesso!');
+            alert('Item e exemplares adicionados com sucesso!');
 
             setTitulo('');
             setAutor('');
@@ -57,6 +67,7 @@ Categoria: ${categoria}
             const mensagem =
                 error.response?.data?.details?.join('\n') ||
                 error.response?.data?.message ||
+                error.message ||
                 'Erro ao adicionar item';
 
             alert(mensagem);

@@ -1,15 +1,31 @@
 .principal {
     background-color: rgb(43, 43, 118);
-    width: 300px;
+    width: 280px;
     height: 100vh;
     color: white;
-    padding: 20px 30px;
+    padding: 14px 24px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.logo {
+    width: 190px;
+    display: block;
+    margin: 0 auto 18px auto;
+}
+
+.nav {
+    width: 100%;
 }
 
 .ul {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 14px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .ul a {
@@ -19,9 +35,10 @@
 
 .li {
     text-align: center;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid rgb(60, 74, 144);
     border-radius: 5px;
+    font-size: 0.95rem;
 }
 
 .li:hover {
@@ -29,15 +46,17 @@
     cursor: pointer;
 }
 
-.li a {
-    color: white;
-    text-decoration: none;
+.menuTitulo {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .submenu {
     list-style: none;
     padding: 0;
-    margin-top: 10px;
+    margin-top: 8px;
     display: flex;
     flex-direction: column;
 }
@@ -48,11 +67,11 @@
 
 .submenuLink {
     display: block;
-    padding: 10px 0;
-    color: rgba(255, 255, 255, 0.8);
+    padding: 7px 0;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     transition: background 0.2s;
 }
 
@@ -63,4 +82,22 @@
 
 .divider {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sair {
+    color: #ff4d4d;
+    margin-top: 4px;
+}
+
+.principal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.principal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.principal::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
 }
