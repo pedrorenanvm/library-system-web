@@ -57,19 +57,6 @@ export default function Login() {
           
         />
 
-        <a 
-           href="/recuperar-senha" 
-           style={{
-            color: '#004488',
-            fontSize: '14px',
-            textDecoration: 'none',
-            alignSelf: 'flex-end', 
-            marginTop: '15px',
-            marginRight:'20px'
-          }}
-        >
-          Esqueci minha senha
-        </a>
 
         {erro && <p style={{ color: 'red', fontSize: 13, marginBottom: 8 }}>{erro}</p>}
 

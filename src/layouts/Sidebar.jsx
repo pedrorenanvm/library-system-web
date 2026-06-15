@@ -1,11 +1,19 @@
 import { useState } from 'react';
 import styles from './Sidebar.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/BibliotecaLogoBranco.png';
+import { useAuth } from '../hooks/useAuth';
 
 function Sidebar() {
     const [showEmprestimos, setShowEmprestimos] = useState(false);
     const [showAcervo, setShowAcervo] = useState(false);
+    const { usuario, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     return (
         <aside className={styles.principal}>
@@ -14,6 +22,13 @@ function Sidebar() {
                 alt="BibliotecaLogoBranco"
                 className={styles.logo}
             />
+
+            {usuario && (
+                <div style={{ textAlign: 'center', marginBottom: 16, color: '#fff', fontSize: 13 }}>
+                    <div style={{ fontWeight: 'bold' }}>{usuario.nome}</div>
+                    <div style={{ opacity: 0.7, fontSize: 11 }}>{usuario.role}</div>
+                </div>
+            )}
 
             <nav className={styles.nav}>
                 <ul className={styles.ul}>
@@ -39,7 +54,6 @@ function Sidebar() {
                                         Adicionar item
                                     </NavLink>
                                 </li>
-
                                 <li className={`${styles.submenuItem} ${styles.divider}`}>
                                     <NavLink
                                         to="/bibliotecario/acervo"
@@ -59,10 +73,11 @@ function Sidebar() {
                     <NavLink to="/bibliotecario/assinaturas">
                         <li className={styles.li}>Assinaturas</li>
                     </NavLink>
-                    
+
                     <NavLink to="/bibliotecario/registrarPerda">
                         <li className={styles.li}>Registrar Perda</li>
                     </NavLink>
+
                     <li className={styles.li}>
                         <div
                             onClick={() => setShowEmprestimos(!showEmprestimos)}
@@ -81,7 +96,6 @@ function Sidebar() {
                                         Novo Empréstimo
                                     </NavLink>
                                 </li>
-
                                 <li className={`${styles.submenuItem} ${styles.divider}`}>
                                     <NavLink
                                         to="/bibliotecario/adicionarDevolucao"
@@ -95,14 +109,16 @@ function Sidebar() {
                     </li>
 
                     <NavLink to="/bibliotecario/pagarMulta">
-
-                        <li className={styles.li}>Multa do leitor</li>
                         <li className={styles.li}>Multas</li>
                     </NavLink>
 
                     <li className={styles.li}>Relatórios</li>
 
-                    <li className={`${styles.li} ${styles.sair}`}>
+                    <li
+                        className={`${styles.li} ${styles.sair}`}
+                        onClick={handleLogout}
+                        style={{ cursor: 'pointer' }}
+                    >
                         Sair
                     </li>
                 </ul>
