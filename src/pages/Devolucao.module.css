@@ -21,6 +21,30 @@
     font-weight: 600;
 }
 
+.filtros {
+    display: grid;
+    grid-template-columns: 1fr 170px 170px;
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.selectLeitor {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #dfdfdf;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
 .tabelaContainer {
     background-color: #fff;
     border-radius: 8px;
@@ -57,17 +81,17 @@
     font-size: 0.9rem;
     text-align: center;
     vertical-align: middle;
+    word-break: break-word;
 }
 
-/* Largura fixa para alinhar todas as colunas */
 .tabela th:nth-child(1),
 .tabela td:nth-child(1) {
-    width: 15%;
+    width: 18%;
 }
 
 .tabela th:nth-child(2),
 .tabela td:nth-child(2) {
-    width: 22%;
+    width: 27%;
 }
 
 .tabela th:nth-child(3),
@@ -77,38 +101,26 @@
 
 .tabela th:nth-child(4),
 .tabela td:nth-child(4) {
-    width: 17%;
+    width: 15%;
 }
 
 .tabela th:nth-child(5),
 .tabela td:nth-child(5) {
-    width: 28%;
+    width: 22%;
 }
 
-.comMulta {
+.atrasado {
     color: #e74c3c;
     font-weight: bold;
 }
 
-.btnPagar {
-    width: 170px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 7px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+.emDia {
+    color: #27ae60;
     font-weight: bold;
-    transition: background 0.3s;
-    font-size: 0.85rem;
-}
-
-.btnPagar:hover {
-    background-color: #c0392b;
 }
 
 .btnDevolver {
-    width: 170px;
+    width: 160px;
     background-color: #27ae60;
     color: white;
     border: none;
@@ -127,6 +139,29 @@
 .linhaVazia td {
     background-color: #fdfdfd;
     color: #ccc;
+}
+
+.erro {
+    color: #b30000;
+    background-color: #ffe1e1;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.sucesso {
+    color: #087a25;
+    background-color: #d4f5dc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.mensagem {
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .tabelaContainer::-webkit-scrollbar {

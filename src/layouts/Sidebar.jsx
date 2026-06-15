@@ -90,10 +90,8 @@ function Sidebar() {
                     </li>
 
                     <NavLink to="/bibliotecario/pagarMulta">
-                        <li className={styles.li}>Multa do leitor (teste)</li>
+                        <li className={styles.li}>Multas</li>
                     </NavLink>
-
-                    <li className={styles.li}>Relatórios</li>
 
                     <li className={styles.li} style={{ marginTop: 'auto', color: '#ff4d4d' }}>
                         Sair
