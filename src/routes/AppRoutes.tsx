@@ -10,6 +10,7 @@ import VerItens from '../pages/VerItens';
 import Assinaturas from '../pages/Assinaturas'
 import RegistrarPerda from '../pages/RegistrarPerda'
 import Dashboard from "../pages/Dashboard";
+import VerLeitores from '../pages/VerLeitores'
 
 
 export default function AppRoutes() {
@@ -29,6 +30,7 @@ export default function AppRoutes() {
             <Route path="/bibliotecario/acervo" element={<VerItens />} />
             <Route path="assinaturas" element={<Assinaturas />} />
             <Route path="registrarPerda" element={<RegistrarPerda />} />
+            <Route path="verLeitores" element={<VerLeitores />} />
           </Route>
         </Route>
 
